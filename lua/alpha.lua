@@ -651,6 +651,10 @@ function alpha.redraw(conf, state)
     alpha.draw(conf, state)
 end
 
+function alpha.is_open()
+    return vim.tbl_isempty(alpha_state)
+end
+
 function alpha.close(ev)
     alpha_state[ev.buf] = nil
     cursor_ix = 1
