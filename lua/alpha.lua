@@ -656,10 +656,15 @@ function alpha.is_open()
 end
 
 function alpha.close(ev)
-    alpha_state[ev.buf] = nil
+    if not ev then
+        alpha_state = {}
+        vim.api.nvim_del_augroup_by_name("alpha_temp")
+    else
+        alpha_state[ev.buf] = nil
+        vim.api.nvim_del_augroup_by_id(ev.group)
+    end
     cursor_ix = 1
     cursor_jumps = {}
-    vim.api.nvim_del_augroup_by_id(ev.group)
     vim.api.nvim_exec_autocmds("User", { pattern = "AlphaClosed" })
 end
 
